@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Định tuyến cơ bản</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 7,
+          center: { lat: 21.028511, lng: 105.804817 },
+        });
+
+        var directionsService = new google.maps.DirectionsService();
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+        directionsDisplay.setMap(map);
+
+        var onChangeHandler = function () {
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+        };
+        document
+          .getElementById("start")
+          .addEventListener("change", onChangeHandler);
+        document
+          .getElementById("end")
+          .addEventListener("change", onChangeHandler);
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        directionsService.route(
+          {
+            origin: document.getElementById("start").value,
+            destination: document.getElementById("end").value,
+            travelMode: "DRIVING",
+          },
+          function (response, status) {
+            if (status === "OK") {
+              directionsDisplay.setDirections(response);
+            } else {
+              window.alert("Yêu cầu chỉ đường không thành công do: " + status);
+            }
+          }
+        );
+      }
+    </script>
+  </head>
+  <body onload="initMap()">
+    <div>
+      <b>Điểm bắt đầu: </b>
+      <input id="start" type="text" value="Hà Nội" />
+      <b>Điểm đến: </b>
+      <input id="end" type="text" value="Hồ Chí Minh" />
+    </div>
+    <div id="map" style="height: 500px; width: 100%"></div>
+  </body>
+</html>

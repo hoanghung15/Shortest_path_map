@@ -1,0 +1,5 @@
+(4, 19.5);icon/gray.png
+(25,12.5);icon/yellow.png
+(7,11);icon/green.png
+(16,16.5);icon/red.png
+(15,0);icon/nameST.png
